@@ -1,0 +1,11 @@
+.RTL{
+	direction: RTL;
+}
+
+.LTR{
+	direction: LTR;
+}
+
+.selected{
+	background: rgb(69,50,120);
+}

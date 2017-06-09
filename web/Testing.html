@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suggestions</title>
+<link href="resources/css/style.css" rel="stylesheet">
+<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="resources/bootstrap/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+
+</head>
+
+<body>
+	<div ng-app="application" ng-controller="controller">
+		<p>
+			Project: <select
+				ng-change="events.functions.onChange(suggest.ProjectModel,'suggest.DataInputID')"
+				id="suggest.ProjectID" name="suggest.Project"
+				ng-model="suggest.ProjectModel">
+				<option ng-repeat="project in configuration.projects.feed"
+					value="{{project.id}}">{{project.value}}</option>
+			</select>
+		</p>
+
+		<p>Query :</p>
+		<div>
+		<div ng-if="suggestions.vars.shouldSuggest">
+			<div ng-if="suggestions.vars.isSuggesting">
+				<div class="btn-group">
+					<label ng-repeat="suggestion in suggestions.data.databaseSuggestions" class="btn " ng-class="{'btn-primary':((suggestion.source===suggestions.vars.selected.source)&&(suggestion.index===suggestions.vars.selected.index)&&(suggestions.vars.selected.selected==='default')),'btn-success':((suggestion.source===suggestions.vars.selected.source)&&(suggestion.index===suggestions.vars.selected.index)&&(suggestions.vars.selected.selected==='manual')),'btn-default':((suggestion.source!==suggestions.vars.selected.source)||(suggestion.index!==suggestions.vars.selected.index))}" ng-model="suggestions.vars.selected"
+					ng-click="suggestions.functions.useSuggestion()"
+					uib-btn-radio="suggestion">{{suggestion.value}}, {{suggestion.source}}, {{suggestion.index}}, {{suggestion.selected}}</label>
+					<label ng-repeat="suggestion in suggestions.data.yamliSuggestions" class="btn " ng-class="{'btn-primary':((suggestion.source===suggestions.vars.selected.source)&&(suggestion.index===suggestions.vars.selected.index)&&(suggestions.vars.selected.selected==='default')),'btn-success':((suggestion.source===suggestions.vars.selected.source)&&(suggestion.index===suggestions.vars.selected.index)&&(suggestions.vars.selected.selected==='manual')),'btn-default':((suggestion.source!==suggestions.vars.selected.source)||(suggestion.index!==suggestions.vars.selected.index))}" ng-model="suggestions.vars.selected"
+					ng-click="suggestions.functions.useSuggestion()"
+					uib-btn-radio="suggestion">{{suggestion.value}}</label>
+					<label ng-repeat="suggestion in suggestions.data.googleSuggestions" class="btn" ng-class="{'btn-primary':((suggestion.source===suggestions.vars.selected.source)&&(suggestion.index===suggestions.vars.selected.index)&&(suggestions.vars.selected.selected==='default')),'btn-success':((suggestion.source===suggestions.vars.selected.source)&&(suggestion.index===suggestions.vars.selected.index)&&(suggestions.vars.selected.selected==='manual')),'btn-default':((suggestion.source!==suggestions.vars.selected.source)||(suggestion.index!==suggestions.vars.selected.index))}" ng-model="suggestions.vars.selected"
+					ng-click="suggestions.functions.useSuggestion()"
+					uib-btn-radio="suggestion">{{suggestion.value}}</label>
+				</div>
+			</div>
+		</div>
+		</div>
+
+		<p>
+			<textarea id="suggest.DataInputID" ng-model="suggest.DataInputModel"
+				ng-change="events.functions.onChange(suggest.ProjectModel,'suggest.DataInputID')"
+				ng-keydown="events.functions.onKeyDown($event)"
+				ng-keyup="events.functions.onKeyUp($event)"
+				ng-keypress="events.functions.onKeyPress($event)" ng-class="{RTL : suggestions.vars.inputRTL}" ng-click="events.functions.onClickText()">
+
+            </textarea>
+                        	<div class="btn-group">
+					<label class="btn" ng-model="suggestions.vars.inputRTL" ng-class="{'btn-success':suggestions.vars.inputRTL,'btn-default':!suggestions.vars.inputRTL}" ng-click="events.functions.onChange(suggest.ProjectModel,'suggest.DataInputID')"
+					uib-btn-checkbox>RTL</label>
+				</div>
+            
+		</p>
+		<!-- Outputs Testing -->
+		<div>
+			<p>onChange :</p>
+			<p style="background-color: black; color: white">Language :
+				{{configuration.languages.current}}, Project :
+				{{configuration.projects.current}}, Input Direction : {{suggestions.vars.inputRTL}}, Is Arabic : {{suggestions.vars.isArabic}}</p>
+				
+			<p>Data :</p>
+			<p style="background-color: black; color: white">Words : 
+			{{suggestions.vars.words}}
+			</p>
+			<p style="background-color: black; color: white">Shoud Suggest : 
+			{{suggestions.vars.shouldSuggest}}, Is Suggesting : {{suggestions.vars.isSuggesting}}, Is Saving : {{suggestions.vars.isSaving}}, Feed : {{suggestions.vars.feed}}, Has Previous : {{suggestions.vars.hasPrevious}}, Predecessor : {{suggestions.vars.predecessor}}
+			</p>
+			<p style="background-color: black; color: white">Google Suggestions : 
+			{{suggestions.data.googleSuggestions}}
+			</p>
+			<p style="background-color: black; color: white">Yamli Suggestions : 
+			{{suggestions.data.yamliSuggestions}}
+			</p>
+			<p style="background-color: black; color: white">DataBase Suggestions : 
+			{{suggestions.data.databaseSuggestions}}
+			</p>
+			<p style="background-color: black; color: white">Selected Suggestion : 
+			{{suggestions.vars.selected}}
+			</p>
+		</div>
+
+	</div>
+
+
+	<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/angular/angular.min.js"></script>
+	<script type="text/javascript"
+		src="resources/angular/angular-sanitize.min.js"></script>
+	<script type="text/javascript"
+		src="resources/angular/angular-animate.min.js"></script>
+	<script type="text/javascript"
+		src="resources/angular/ui-bootstrap-tpls.min.js"></script>
+	<script type="text/javascript" src="resources/js/Application.js"></script>
+</body>
+
+</html>
